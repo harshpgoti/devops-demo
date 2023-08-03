@@ -11,8 +11,15 @@
   - name: start docker service
     command: sudo systemctl start docker
 
-  - name: stop running container
-    command: sudo docker stop insure-me
+  - name: Check if the container exists and is running
+    docker_container_info:
+      name: insure-me
+    register: container_status
+    ignore_errors: yes
+
+  - name: Stop and remove the container if it exists and is running
+    command: sudo docker rm -f insure-me
+    when: container_status.exists and container_status.running
 
   - name: deploy insureme application
     command: sudo docker run -itd -p 8081:8081 --name insure-me harshgoti/insure-me:1.0

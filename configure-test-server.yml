@@ -11,5 +11,8 @@
   - name: start docker service
     command: sudo systemctl start docker
 
+  - name: stop container
+    command: sudo docker stop insure-me
+
   - name: deploy insureme application
     command: sudo docker run -itd -p 8081:8081 --name insure-me harshgoti/insure-me:1.0

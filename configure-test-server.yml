@@ -11,10 +11,25 @@
   - name: start docker service
     command: sudo systemctl start docker
 
-  - name: remove container
-    docker_container:
-      name: insure-me
-      state: absent
+  - name: Install pip
+    apt:
+      name: python3-pip
+      state: present
+      update_cache: true
+
+  - name: Install Docker
+    pip:
+      name: docker
+
+  - name: Start Docker service
+    service:
+      name: docker
+      state: started
 
   - name: deploy insureme application
-    command: sudo docker run -itd -p 8081:8081 --name insure-me harshgoti/insure-me:1.0
+    docker_container:
+          name: insure-me
+          image: harshgoti/insure-me:1.0
+          state: started
+          ports:
+            - "8081:8081"

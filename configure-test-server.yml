@@ -16,4 +16,3 @@
 
   - name: deploy insureme application
     command: sudo docker run -itd -p 8081:8081 --name insure-me harshgoti/insure-me:1.0
-// write ansible playbook using above script, if docker container is exist and running then stop and remove

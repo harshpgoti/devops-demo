@@ -26,10 +26,15 @@
       name: docker
       state: started
 
+  - name: remove container
+    docker_container:
+      name: insure-me
+      state: absent
+
   - name: deploy insureme application
     docker_container:
-          name: insure-me
-          image: harshgoti/insure-me:1.0
-          state: started
-          ports:
-            - "8081:8081"
+      name: insure-me
+      image: harshgoti/insure-me:1.0
+      state: started
+      ports:
+        - "8081:8081"

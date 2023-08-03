@@ -11,8 +11,13 @@
   - name: start docker service
     command: sudo systemctl start docker
 
-  - name: remove container if exist
-    command: docker rm -f "{{ docker_container_info.container_id }}" if docker_container_info.exists else echo "Container does not exist."
+  - name: Check if docker container exists
+    shell: docker ps -aqf "name=insure-me"
+    register: docker_container_id
+    ignore_errors: yes
+
+  - name: Stop and remove container if it exists
+    shell: docker rm -f "{{ docker_container_id.stdout }}" if docker_container_id.rc == 0 else echo "Container does not exist or not running."
     ignore_errors: yes
 
   - name: deploy insureme application

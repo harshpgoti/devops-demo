@@ -12,7 +12,8 @@
     command: sudo systemctl start docker
 
   - name: remove container if exist
-    command: sudo docker stop insure-me || true && docker rm insure-me || true
+    command: docker rm -f "{{ docker_container_info.container_id }}" if docker_container_info.exists else echo "Container does not exist."
+    ignore_errors: yes
 
   - name: deploy insureme application
     command: sudo docker run -itd -p 8081:8081 --name insure-me harshgoti/insure-me:1.0

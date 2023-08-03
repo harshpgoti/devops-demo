@@ -11,7 +11,7 @@
   - name: start docker service
     command: sudo systemctl start docker
 
-  - name: stop container
+  - name: stop running container
     command: sudo docker stop insure-me
 
   - name: deploy insureme application

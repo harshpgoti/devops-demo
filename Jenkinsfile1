@@ -1,0 +1,12 @@
+node{
+    stage('code checkout'){
+        echo 'checking repo code cloned'
+        git 'https://github.com/harshpgoti/insure-me.git'
+    }
+    
+    stage('configure Prod-server and deploy insure-me'){
+        echo "configuring Prod-server"
+        ansiblePlaybook become: true, credentialsId: 'ssh-key', disableHostKeyChecking: true, installation: 'Ansible', inventory: '/etc/ansible/hosts', playbook: 'configure-prod-server.yml'
+    }
+
+}

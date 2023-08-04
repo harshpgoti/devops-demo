@@ -24,7 +24,6 @@ node{
         
         stage('configure test-server and deploy insure-me'){
             echo "configuring test-server"
-          //  sh 'ansible-playbook configure-test-server.yml'
             ansiblePlaybook become: true, credentialsId: 'ssh-key-ansibles', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/hosts', playbook: 'configure-test-server.yml'
         }
         
